@@ -2,21 +2,21 @@ from tkinter import *
 from tkinter import scrolledtext
 import re
 
-# Optional personalization
+
 user_name = None
 
-# Updated response generation logic
+
 def generate_response(user_input):
     global user_name
     user_input_lower = user_input.lower()
 
-    # Detect name if provided
+    
     name_match = re.search(r"i am (\w+)", user_input, re.IGNORECASE)
     if name_match:
         user_name = name_match.group(1).capitalize()
         return f"Nice to meet you, {user_name}! How can I assist you today?"
 
-    # Keyword-response pairs
+    
     keyword_map = {
         "hi|hello|hey": "Hi there!  Welcome to BVCOE HelpDesk Chatbot. How can I help you?",
         "course duration|duration": "Our BE courses are 4 years long, split into 8 semesters.",
@@ -39,14 +39,14 @@ def generate_response(user_input):
         "bye|exit": "Goodbye! Feel free to message me anytime."
     }
 
-    # Match and collect all keywords with their positions
+    
     matches = []
     for pattern, response in keyword_map.items():
         match = re.search(pattern, user_input_lower)
         if match:
             matches.append((match.start(), response))  # (position, response)
 
-    # Sort responses by order of keyword appearance
+    
     matches.sort(key=lambda x: x[0])
 
     if matches:
@@ -55,7 +55,7 @@ def generate_response(user_input):
     else:
         return "Hmm.. I'm not sure how to answer that. Can you try asking in a different way?"
 
-# Send message function
+
 def send_message():
     user_msg = entry.get()
     if user_msg.strip() == "":
@@ -68,7 +68,7 @@ def send_message():
     entry.delete(0, END)
     chat_window.see(END)
 
-# GUI setup
+
 root = Tk()
 root.title("BVCOE Chatbot")
 root.geometry("550x600")
@@ -83,7 +83,8 @@ entry.bind("<Return>", lambda event: send_message())
 send_button = Button(root, text="Send", font=("Arial", 12), command=send_message)
 send_button.pack(pady=5)
 
-# Welcome message
+
 chat_window.insert(END, "Bot: Hello! I’m BVCOE HelpDesk Chatbot.\nHow can I help you?\n\n")
 
 root.mainloop()
+
